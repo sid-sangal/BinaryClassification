@@ -1,3 +1,4 @@
+#code author: SiddhantSangal
 import random                                                                                                #importing the dependant libraries
 import math
 import matplotlib.pyplot as plt
