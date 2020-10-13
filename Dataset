@@ -1,0 +1,129 @@
+import random                                                                                                #importing the dependant libraries
+import math
+import matplotlib.pyplot as plt
+import numpy as np
+import tensorflow as tf
+#generation of the train dataset with 100 points inside the circle and 100 points outside.
+train_inside_x = []                                                                                                         #empty lists a and b for appending random points into
+train_inside_y = []
+noise = np.random.uniform(-0.2,0.2,100)                                                                      #random uniform noise generator i nthe range [-0.2,0.2] , 100 no of points 
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return str((self.x, self.y))
+
+class Circle:
+    def __init__(self, origin, radius):
+        self.origin = origin
+        self.radius = radius
+
+origin = Point(0, 0)                                                                                        #dimensions of the circle
+radius = 1
+circle = Circle(origin, radius)
+
+for i in range(0, 100):                                                                                     #random point generator using the rndom.random function
+    p = random.uniform(0,1) * 2 * math.pi
+    r = circle.radius * math.sqrt(random.uniform(0,1))
+    x = math.cos(p) * r                                                                                     #using the polar form to multiply random angle and radius length to place points in random locations
+    train_inside_x.append(x)
+    y = math.sin(p) * r
+    train_inside_y.append(y)
+#print(len(a))
+#print(a,b)
+#plt.scatter(a,b)                                                                                            #noiseless plot of the random 100 points inside the circle
+noise = np.random.uniform(-0.2,0.2,100)                                                                      #adding unifrom noise to the dataset
+train_inside_x = train_inside_x+noise
+train_inside_y = train_inside_y+noise
+plt.scatter(a,b,color = 'Green')                                                                         #noisy plot of points inside circle with uniform dist [-0.2,0.2]
+
+
+"""FirstList1 = []                                                                                          #bruteforce method
+FirstList2 = []
+SecondList1 = []
+SecondList2 = []
+ThirdList1 = []
+ThirdList2 = []
+FourthList1 = []
+FourthList2 = []
+# Set a length of the list to 10
+for i in range(0, 25):
+    x = round(random.uniform(0, 1), 2)
+    y = round(random.uniform(0, 1), 2)
+    FirstList1.append(x)
+    FirstList2.append(y)
+    x = y = 0
+    x = round(random.uniform(-2, -1), 2)
+    y = round(random.uniform(-2, 2), 2)
+    SecondList1.append(x)
+    SecondList2.append(y)
+    x = round(random.uniform(-2, 2), 2)
+    y = round(random.uniform(1, 2), 2)
+    ThirdList1.append(x)
+    ThirdList2.append(y)
+    x = y = 0
+    x = round(random.uniform(1, 2), 2)
+    y = round(random.uniform(-2, 2), 2)
+    FourthList1.append(x)
+    FourthList2.append(y)
+plt.scatter(FirstList1, FirstList2, color = 'Red')
+plt.scatter(SecondList1, SecondList2, color = 'Red')
+plt.scatter(ThirdList1, ThirdList2, color = 'Red')
+plt.scatter(FourthList1, FourthList2, color = 'Red')"""
+
+i = 0                                                                                                          #initializing the counter 
+train_outside_x = []                                                                                                     #lists for appendign the random points into
+train_outside_y = []
+while i < 100:                                                                                                 #while loop and not for because of the truth checkup logic
+     x = round(random.uniform(-2,2 ), 2)                                                                       #random number generator
+     y = round(random.uniform(-2, 2), 2)
+     if x**2 + y**2 > 1:                                                                                       #condition for all 100 points outside the circle
+         train_outside_x.append(x)
+         train_outside_y.append(y)
+         i = i+1
+#print(train_outside_x,train_outside_y)
+#print(len(train_outside_x), len(train_outside_y))
+#plt.scatter(list1,list2)                                                                                       #noisless disply of all the points together                                                                       ##adding unifrom noise to the dataset
+train_outside_x = train_outside_x + noise
+train_outside_y = train_outside_y + noise
+plt.scatter(train_outside_x,train_outside_y)  
+plt.show()                                                                                      #combined noisy plot of the whole training dataset
+
+#generation of the test dataset with 50 points inside the circle and 50 outside
+test_inside_x = []
+test_inside_y = []
+for i in range(0, 50):                                                                                     #random point generator using the rndom.random function
+    p = random.uniform(0,1) * 2 * math.pi
+    r = circle.radius * math.sqrt(random.uniform(0,1))
+    x = math.cos(p) * r                                                                                     #using the polar form to multiply random angle and radius length to place points in random locations
+    test_inside_x.append(x)
+    y = math.sin(p) * r
+    test_inside_y.append(y)
+#print(len(a))
+#print(a,b)
+plt.scatter(test_inside_x,test_inside_y)                                                                                            #noiseless plot of the random 50 points inside the circle
+noise = np.random.uniform(-0.2,0.2,50)                                                                      #adding unifrom noise to the dataset
+test_inside_x = test_inside_x+noise
+test_inside_y = test_inside_y+noise
+i = 0                                                                                                          #initializing the counter 
+test_outside_x = []                                                                                                     #lists for appending the random points into
+test_outside_y = []
+while i < 50:                                                                                                 #while loop and not for because of the truth checkup logic
+     x = round(random.uniform(-2,2 ), 2)                                                                       #random number generator
+     y = round(random.uniform(-2, 2), 2)
+     if x**2 + y**2 > 1:                                                                                       #condition for all 50 points outside the circle
+         test_outside_x.append(x)
+         test_outside_y.append(y)
+         i = i+1
+#print(test_outside_x,test_outside_y)
+#print(len(test_outside_x), len(test_outside_y))
+#plt.scatter(list1,list2)                                                                                       #noisless disply of all the points together                                                                       ##adding unifrom noise to the dataset
+test_outside_x = test_outside_x + noise
+test_outside_y = test_outside_y + noise
+plt.scatter(test_outside_x,test_outside_y)  
+plt.show()                                                                                                      #noisy display of the test dataset 
+#end of dataset
+
+#
